@@ -17,7 +17,7 @@ for i in range(15) :
         color = (255, 0, 0) # couleur rouge
         pg.draw.rect(screen, color, rect)
 
-
+score = 0
 # les coordonnées du corps du serpent
 snake = [(10, 15),(11, 15),(12, 15)]
 
@@ -28,10 +28,15 @@ rect_fruit = pg.Rect(fruit[0]*20,fruit[1]*20, width, height)
 pg.draw.rect(screen, [0, 0, 255], rect_fruit)
 # on rajoute une condition à la boucle: si on la passe à False le programme s'arrête
 running = True
+tour=0
 while running:
-
+    tour+=1
     clock.tick(1)
-
+    for i in range(1,len(snake)) :
+        if snake[i]==snake[0] and tour>2  :
+           
+            running=False
+    pg.display.set_caption(f"score:{score}")
     # on itère sur tous les évênements qui ont eu lieu depuis le précédent appel
     # ici donc tous les évènements survenus durant la seconde précédente
     for event in pg.event.get():
@@ -78,11 +83,14 @@ while running:
     if snake[0]==fruit :
         snake.insert(0,(fruit[0]+direction[0],fruit[1]+direction[1]))
         fruit=(randint(0,31),randint(1,31))
+        score+=1
 
     rect_fruit = pg.Rect(fruit[0]*20,fruit[1]*20, width, height)
     pg.draw.rect(screen, [0, 0, 255], rect_fruit)
 
     
+    
+
     pg.display.update()
 
 # Enfin on rajoute un appel à pg.quit()
