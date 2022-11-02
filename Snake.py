@@ -23,6 +23,9 @@ snake = [(10, 15),(11, 15),(12, 15)]
 
 direction = [1,0]
 
+fruit=(randint(0,31), randint(0,31))
+rect_fruit = pg.Rect(fruit[0]*20,fruit[1]*20, width, height)
+pg.draw.rect(screen, [0, 0, 255], rect_fruit)
 # on rajoute une condition à la boucle: si on la passe à False le programme s'arrête
 running = True
 while running:
@@ -72,6 +75,12 @@ while running:
         color_serp =  [255, 255, 255]
         pg.draw.rect(screen, color_serp, recti)
     
+    if snake[0]==fruit :
+        snake.insert(0,(fruit[0]+direction[0],fruit[1]+direction[1]))
+        fruit=(randint(0,31),randint(1,31))
+
+    rect_fruit = pg.Rect(fruit[0]*20,fruit[1]*20, width, height)
+    pg.draw.rect(screen, [0, 0, 255], rect_fruit)
 
     
     pg.display.update()
