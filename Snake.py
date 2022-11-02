@@ -108,18 +108,21 @@ if not os.path.exists('High_score.txt') :
 else :
     with open('High_score.txt','r') as f :
         
-        
+        noms=[]
         scores=[]
         i=0
         for line in f :
             write=False
             scores.append("")
+            noms.append("")
             for a in line :
                 
                 if a== '\n':
                     write = False
                 if write : 
                     scores[i]=scores[i]+a
+                if not write and a!=',' :
+                    noms[i]=noms[i]+a
                 if a=="," :
                     write = True
                 
@@ -129,9 +132,19 @@ if len(scores)<5 :
     nom=input()
     with open('High_score.txt','a') as f :
         print('\n{} '.format(nom)+', {}'.format(score), file = f)
+
 else : 
-    min=scores.index(min(scores))
-    if score>min :
-        with open('High_scores.txt','w') as f :
-            pass
+    for i in range(len(scores)) :
+        scores[i] = int(scores[i])
+    m=scores.index(min(scores))
+    if score>min(scores) :
+        for i in range(len(scores)) :
+            scores[i]=str(scores[i])
+        print ('Entrez votre pseudo')
+        nom=input()
+        noms[m]=nom
+        scores[m]=score
+        with open('High_score.txt','w') as f :
+            for i in range(5) :
+                print("{} ,".format(noms[i])+"{}".format(scores[i]),file=f)
 pg.quit()
