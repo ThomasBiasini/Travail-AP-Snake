@@ -14,7 +14,7 @@ for i in range(15) :
         height = 20 # hauteur du rectangle en pixels
         rect = pg.Rect(x, y, width, height)
         # appel à la méthode draw.rect()
-        color = (255, 0, 0) # couleur rouge
+        color = (15, 15, 15) # couleur rouge
         pg.draw.rect(screen, color, rect)
 
 score = 0
@@ -23,15 +23,15 @@ snake = [(10, 15),(11, 15),(12, 15)]
 
 direction = [1,0]
 
-fruit=(randint(0,31), randint(0,31))
+fruit=(randint(1,29), randint(1,29))
 rect_fruit = pg.Rect(fruit[0]*20,fruit[1]*20, width, height)
-pg.draw.rect(screen, [0, 0, 255], rect_fruit)
+pg.draw.rect(screen, [255, 0, 0], rect_fruit)
 # on rajoute une condition à la boucle: si on la passe à False le programme s'arrête
 running = True
 tour=0
 while running:
     tour+=1
-    clock.tick(1)
+    clock.tick(15)
     for i in range(1,len(snake)) :
         if snake[i]==snake[0] and tour>2  :
            
@@ -69,7 +69,7 @@ while running:
     x=(x[0]+direction[0], x[1]+direction[1])
     rect_a_recolorier = pg.Rect(a[0]*20, a[1]*20, width, height)
     if a[0]%2==a[1]%2 :
-        color_recoloriage = [255, 0, 0]
+        color_recoloriage = [15, 15, 15]
     else :
         color_recoloriage = [0, 0 ,0]
     pg.draw.rect(screen, color_recoloriage, rect_a_recolorier)
@@ -77,16 +77,19 @@ while running:
     snake.insert(0,x)
     for i in range(len(snake)) :
         recti = pg.Rect(snake[i][0]*20, snake[i][1]*20, width, height)
-        color_serp =  [255, 255, 255]
+        color_serp =  [0, 255, 0]
         pg.draw.rect(screen, color_serp, recti)
+    if snake[0][0]==-1 or snake[0][0]==30 or snake[0][1]==-1 or snake[0][1]==30 :
+        running=False
     
     if snake[0]==fruit :
         snake.insert(0,(fruit[0]+direction[0],fruit[1]+direction[1]))
-        fruit=(randint(0,31),randint(1,31))
+        fruit=(randint(1,29),randint(1,29))
         score+=1
 
+
     rect_fruit = pg.Rect(fruit[0]*20,fruit[1]*20, width, height)
-    pg.draw.rect(screen, [0, 0, 255], rect_fruit)
+    pg.draw.rect(screen, [255, 0, 0], rect_fruit)
 
     
     
