@@ -1,6 +1,7 @@
 
 from random import randint
 import pygame as pg
+import os
 
 pg.init()
 screen = pg.display.set_mode((600, 600))
@@ -98,4 +99,39 @@ while running:
 
 # Enfin on rajoute un appel à pg.quit()
 # Cet appel va permettre à Pygame de "bien s'éteindre" et éviter des bugs sous Windows
+
+if not os.path.exists('High_score.txt') :
+    with open('High_score.txt','w') as f :
+        pass
+
+
+else :
+    with open('High_score.txt','r') as f :
+        
+        
+        scores=[]
+        i=0
+        for line in f :
+            write=False
+            scores.append("")
+            for a in line :
+                
+                if a== '\n':
+                    write = False
+                if write : 
+                    scores[i]=scores[i]+a
+                if a=="," :
+                    write = True
+                
+            i+=1
+if len(scores)<5 :
+    print('Entrer un pseudo')
+    nom=input()
+    with open('High_score.txt','a') as f :
+        print('\n{} '.format(nom)+', {}'.format(score), file = f)
+else : 
+    min=scores.index(min(scores))
+    if score>min :
+        with open('High_scores.txt','w') as f :
+            pass
 pg.quit()
